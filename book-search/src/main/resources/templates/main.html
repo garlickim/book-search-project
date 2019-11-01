@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+    <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Main</title>
+</head>
+<body>
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-3.4.1.js}"></script>
+<script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-1.11.2.min.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    $().ready(function () {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+
+        $(document).ajaxSend(function (e, xhr) {
+            xhr.setRequestHeader(header, token);
+        });
+
+        $("#searchProc").click(function () {
+            $.ajax({
+                method: "post",
+                url: "/book/search",
+                data: JSON.stringify({
+                    type: $('input[name=rdKeywordType]').val(),
+                    keyword: $("#txtKeyword").val()
+                }),
+                contentType: "application/json;charset=UTF-8",
+                success: function (data) {   // success callback function
+                    $("#divResult").html(data);
+                },
+                error: function (jqXhr, textStatus, errorMessage) { // error callback
+                    alert(errorMessage);
+                }
+            })
+            ;
+        });
+    });
+</script>
+
+<!--<h1>도서 검색 페이지</h1>-->
+
+<input type="radio" name="rdKeywordType" id="title" value="1"> 제목
+<input type="radio" name="rdKeywordType" id="isbn" value="2"> ISBN
+<input type="radio" name="rdKeywordType" id="publisher" value="3"> 출판사
+<input type="radio" name="rdKeywordType" id="person" value="4"> 인명
+
+<input th:type="text" th:id="txtKeyword"/>
+<button id="searchProc">검색</button>
+
+<div id="divResult">
+    <th:block th:replace="/fragments :: resultFragment"></th:block>
+</div>
+</body>
+</html>

@@ -1,41 +1,122 @@
 package com.garlickim.book.search.controller;
 
-import com.garlickim.book.search.account.Account;
-import com.garlickim.book.search.service.AccountService;
+import java.security.Principal;
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
+import com.garlickim.book.search.domain.Account;
+import com.garlickim.book.search.domain.Book;
+import com.garlickim.book.search.domain.BookSearch;
+import com.garlickim.book.search.service.AccountService;
+import com.garlickim.book.search.service.SearchService;
 
 @Controller
-public class RouteController {
+public class RouteController
+{
 
     @Autowired
     AccountService accountService;
 
+    @Autowired
+    SearchService  searchService;
+
+
+
+
+
     @GetMapping("/")
-    public String index(Model model, Principal principal) {
-        if (principal == null) {
-            return "login";
-        } else {
-            return "info";
-        }
+    public String index(Model model, Principal principal)
+    {
+        return (principal == null) ? "login" : "main";
     }
+
+
+
+
 
     // 회원가입 페이지
     @GetMapping("/signup")
-    public String signup(Model model, Principal principal) {
-            return "signup";
+    public String viewSignUp(Model model, Principal principal)
+    {
+        return "signup";
     }
+
+
+
+
 
     // 회원가입 로직
     @PostMapping("/user/signup")
-    public String signupFlow(Account account) {
-        accountService.createNew(account);
+    public String procSignup(Account account)
+    {
+        this.accountService.createNew(account);
         return "redirect:/";
+    }
+
+
+
+
+
+    // 책검색 메인 페이지
+    @GetMapping("/main")
+    public String viewMain(Model model, Principal principal)
+    {
+        return (principal == null) ? "login" : "main";
+    }
+
+
+
+
+
+    @PostMapping("/book/search")
+    public ModelAndView procBookSearch(@RequestBody BookSearch bookSearch)
+    {
+        HashMap<String, Object> map = new HashMap<>();
+        ModelAndView mav = new ModelAndView("fragments :: resultFragment");
+
+        System.out.println("==>> " + bookSearch);
+
+        String query1 = "&target=";
+
+        switch ( bookSearch.getType() )
+        {
+            case "1":
+                query1 += "title";
+                break;
+            case "2":
+                query1 += "isbn";
+                break;
+            case "3":
+                query1 += "publisher";
+                break;
+            case "4":
+                query1 += "person";
+                break;
+            default:
+                query1 = "";
+        }
+
+        try
+        {
+            Book books = this.searchService.searchBook("query=" + bookSearch.getKeyword() + query1);
+
+            // map.put("data", books);
+            mav.addObject("data", books);
+        }
+        catch ( Exception e )
+        {
+
+        }
+
+        return mav;
+        // .render("desktop/common/commonFragment :: weekFragment", model);
     }
 
 }

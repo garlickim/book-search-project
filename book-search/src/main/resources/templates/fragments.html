@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="resultFragment">
+    <div id="divResult">
+        <table>
+            <colgroup>
+                <col width="10%"/>
+                <col width="15%"/>
+                <col width="15%"/>
+                <col width="*%"/>
+            </colgroup>
+            <thead>
+            <tr>
+                <th>제목</th>
+                <th>소개</th>
+                <th>출판사</th>
+                <th>판매가</th>
+            </tr>
+            </thead>
+            <div>
+                <tbody th:if="${0 != data?.documents?.size()}">
+                <tr th:each="doc : ${data?.documents}">
+                    <td th:text="${doc.title}"></td>
+                    <td th:text="${doc.contents}"></td>
+                    <td th:text="${doc.publisher}"></td>
+                    <td th:text="${doc.sale_price}"></td>
+                </tr>
+                </tbody>
+                <tbody th:unless="${0 != data.documents?.size()}">
+                <tr>
+                    <td colspan="4">
+                        내용이 없습니다.
+                    </td>
+                </tr>
+                </tbody>
+            </div>
+        </table>
+    </div>
+</div>
+</html>
