@@ -41,8 +41,7 @@ public class AccountTest {
     }
 
     @Test   // with 함수를 사용하여 직접 user 정보를 set 하는 방법
-    public void test_index_user() throws Exception
-    {
+    public void test_index_user() throws Exception {
         this.mockMvc.perform(get("/").with(user("garlic").roles("USER")))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -70,9 +69,6 @@ public class AccountTest {
     }
 
     private Account createUser(String username, String password) {
-        Account account = new Account();
-        account.setUsername(username);
-        account.setPassword(password);
-        return accountService.createNew(account);
+        return accountService.createNew(Account.builder().username(username).password(password).build());
     }
 }
