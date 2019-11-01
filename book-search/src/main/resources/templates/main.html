@@ -23,7 +23,7 @@
                 method: "post",
                 url: "/book/search",
                 data: JSON.stringify({
-                    type: $('input[name=rdKeywordType]').val(),
+                    type: $('input:radio[name=rdKeywordType]:checked').val(),
                     keyword: $("#txtKeyword").val()
                 }),
                 contentType: "application/json;charset=UTF-8",
@@ -41,7 +41,7 @@
 
 <!--<h1>도서 검색 페이지</h1>-->
 
-<input type="radio" name="rdKeywordType" id="title" value="1"> 제목
+<input type="radio" name="rdKeywordType" id="title" value="1" checked> 제목
 <input type="radio" name="rdKeywordType" id="isbn" value="2"> ISBN
 <input type="radio" name="rdKeywordType" id="publisher" value="3"> 출판사
 <input type="radio" name="rdKeywordType" id="person" value="4"> 인명
