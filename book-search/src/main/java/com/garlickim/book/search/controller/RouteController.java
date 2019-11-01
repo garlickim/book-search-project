@@ -1,9 +1,10 @@
 package com.garlickim.book.search.controller;
 
-import java.net.URLEncoder;
-import java.security.Principal;
-import java.util.HashMap;
-
+import com.garlickim.book.search.domain.Account;
+import com.garlickim.book.search.domain.Book;
+import com.garlickim.book.search.domain.BookSearch;
+import com.garlickim.book.search.service.AccountService;
+import com.garlickim.book.search.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.garlickim.book.search.domain.Account;
-import com.garlickim.book.search.domain.Book;
-import com.garlickim.book.search.domain.BookSearch;
-import com.garlickim.book.search.service.AccountService;
-import com.garlickim.book.search.service.SearchService;
+import java.security.Principal;
 
 @Controller
 public class RouteController
@@ -75,40 +72,19 @@ public class RouteController
 
 
 
-
+    // 도서 검색
     @PostMapping("/book/search")
     public ModelAndView procBookSearch(@RequestBody BookSearch bookSearch)
     {
         ModelAndView mav = new ModelAndView("fragments :: resultFragment");
 
-        String query1 = "&target=";
-
-        switch ( bookSearch.getType() )
-        {
-            case "1":
-                query1 += "title";
-                break;
-            case "2":
-                query1 += "isbn";
-                break;
-            case "3":
-                query1 += "publisher";
-                break;
-            case "4":
-                query1 += "person";
-                break;
-            default:
-                query1 = "";
-        }
-
         try
         {
-            Book books = this.searchService.searchBook("query=" + URLEncoder.encode(bookSearch.getKeyword(), "UTF-8") + query1);
+            Book books = this.searchService.searchBook(bookSearch);
             mav.addObject("data", books);
         }
         catch ( Exception e )
         {
-
         }
 
         return mav;

@@ -4,3 +4,12 @@ spring:
   properties:
     hibernate:
       format_sql: true
+
+kakao:
+  api:
+    url: https://dapi.kakao.com/v3/search/book?
+    key: KakaoAK 54a6c384ec25e398d6b7e5fba3fad494
+
+naver:
+  api:
+    url: https://openapi.naver.com/v1/search/book_adv.xml?
