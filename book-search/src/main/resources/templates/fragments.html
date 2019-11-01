@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="resultFragment">
-    <div id="divResult">
         <table>
             <colgroup>
                 <col width="20%"/>
@@ -26,6 +25,13 @@
                 </tr>
             </div>
         </table>
+</div>
+
+<div th:fragment="historyFragment">
+    <div th:each="history : ${data}">
+        <p th:text="${history?.username}"></p>
+        <p th:text="${history?.keyword}"></p>
+        <p th:text="${#dates.format(history?.searchTime, 'yyyy-MM-dd HH:mm:sss')}"></p>
     </div>
 </div>
 </html>

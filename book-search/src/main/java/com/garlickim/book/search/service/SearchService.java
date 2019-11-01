@@ -7,8 +7,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.garlickim.book.search.domain.BookSearch;
+import com.garlickim.book.search.domain.History;
+import com.garlickim.book.search.repository.HistoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +25,10 @@ import javax.xml.bind.Unmarshaller;
 
 @Service
 public class SearchService {
+
+    @Autowired
+    HistoryRepository historyRepository;
+
     @Value("${kakao.api.url}")
     String kakaoApiUrl;
 
@@ -29,9 +38,11 @@ public class SearchService {
     @Value("${naver.api.url}")
     String naverApiUrl;
 
+
     enum ApiType {
         kakao, naver;
     }
+
 
     public Book searchBook(BookSearch bookSearch) throws Exception {
         try {
@@ -41,7 +52,7 @@ public class SearchService {
         }
     }
 
-    public String makeQueryParam(ApiType type, BookSearch bookSearch) throws UnsupportedEncodingException{
+    public String makeQueryParam(ApiType type, BookSearch bookSearch) throws UnsupportedEncodingException {
 
         String targetKakao = "&target=";
         String queryNaver = "";
@@ -113,6 +124,17 @@ public class SearchService {
                 return (Book) unmarshaller.unmarshal(new StringReader(sb.toString()));
             }
         }
+    }
+
+
+    public void saveHistroy(History history) {
+        historyRepository.save(history);
+    }
+
+    public List<History> findKeywordHistory(String username) {
+        ArrayList<History> histories = historyRepository.findByUsernameOrderBySearchTimeDesc(username);
+
+        return histories;
     }
 
 }

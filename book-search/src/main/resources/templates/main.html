@@ -10,6 +10,9 @@
 <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-3.4.1.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     $().ready(function () {
+
+        keywordHistory();
+
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
 
@@ -31,14 +34,34 @@
                 },
                 error: function (jqXhr, textStatus, errorMessage) { // error callback
                     alert(errorMessage);
+                },
+                complete: function () {
+                    keywordHistory();
                 }
-            })
-            ;
+            });
         });
+
+
+        // 히스토리 조회
+        function keywordHistory() {
+            $.ajax({
+                method: "get",
+                url: "/members/" + $("#username").val() + "/keywords",
+                contentType: "application/json;charset=UTF-8",
+                success: function (data) {   // success callback function
+                    $("#divHistory").html(data);
+                },
+                error: function (jqXhr, textStatus, errorMessage) { // error callback
+                    alert(errorMessage);
+                }
+            });
+        }
     });
 </script>
 
 <!--<h1>도서 검색 페이지</h1>-->
+
+<input th:type="hidden" th:id="username" th:value="${username}">
 
 <input type="radio" name="rdKeywordType" id="title" value="1" checked> 제목
 <input type="radio" name="rdKeywordType" id="isbn" value="2"> ISBN
@@ -51,5 +74,10 @@
 <div id="divResult">
     <th:block th:replace="/fragments :: resultFragment"></th:block>
 </div>
+
+<div id="divHistory">
+    <th:block th:replace="/fragments :: historyFragment"></th:block>
+</div>
+
 </body>
 </html>
