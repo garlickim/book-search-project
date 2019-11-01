@@ -16,14 +16,18 @@ public class SearchService
 
     public Book searchBook(String queryParam) throws Exception
     {
+        System.out.println(queryParam);
+
         String header = "KakaoAK 54a6c384ec25e398d6b7e5fba3fad494";
         String apiURL = "https://dapi.kakao.com/v3/search/book?" + queryParam;
+
+        System.out.println("apiURL : "+apiURL);
+
         URL url = new URL(apiURL);
 
         final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         try ( AutoCloseable a = () -> conn.disconnect() )
         {
-            conn.setUseCaches(false);
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Authorization", header);
 

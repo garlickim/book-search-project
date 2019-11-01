@@ -1,5 +1,6 @@
 package com.garlickim.book.search.controller;
 
+import java.net.URLEncoder;
 import java.security.Principal;
 import java.util.HashMap;
 
@@ -78,10 +79,7 @@ public class RouteController
     @PostMapping("/book/search")
     public ModelAndView procBookSearch(@RequestBody BookSearch bookSearch)
     {
-        HashMap<String, Object> map = new HashMap<>();
         ModelAndView mav = new ModelAndView("fragments :: resultFragment");
-
-        System.out.println("==>> " + bookSearch);
 
         String query1 = "&target=";
 
@@ -105,9 +103,7 @@ public class RouteController
 
         try
         {
-            Book books = this.searchService.searchBook("query=" + bookSearch.getKeyword() + query1);
-
-            // map.put("data", books);
+            Book books = this.searchService.searchBook("query=" + URLEncoder.encode(bookSearch.getKeyword(), "UTF-8") + query1);
             mav.addObject("data", books);
         }
         catch ( Exception e )
@@ -116,7 +112,6 @@ public class RouteController
         }
 
         return mav;
-        // .render("desktop/common/commonFragment :: weekFragment", model);
     }
 
 }
