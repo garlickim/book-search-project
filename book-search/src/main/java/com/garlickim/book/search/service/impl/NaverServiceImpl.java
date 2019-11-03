@@ -126,7 +126,6 @@ public class NaverServiceImpl extends ApiService
 
         return Document.builder()
                        .books(books)
-                       .isEnd(isEnd)
                        .totalCnt(naverDocument.getTotal())
                        .pageableCnt(naverDocument.getDisplay())
                        .build();

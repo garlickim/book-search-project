@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+a, button {
+    cursor: pointer;
+}
+
 #divHistory {
     float: left;
     width: 20%;
@@ -16,7 +20,19 @@
     margin: 0;
 }
 
-#divResult {
+#divContents {
     float: left;
     width: 80%;
+}
+
+div.book span {
+    margin-right: 8px;
+}
+
+#pageList {
+    margin-top: 15px;
+}
+
+#pageList span > * {
+    margin: 12px 5px 12px 0;
 }

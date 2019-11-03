@@ -29,9 +29,8 @@ public class ApiController
 
     // 도서 검색
     @PostMapping("/book/search")
-    public ModelAndView procBookSearch(Principal principal, @RequestBody BookSearch bookSearch)
+    public Document procBookSearch(Principal principal, @RequestBody BookSearch bookSearch)
     {
-        ModelAndView mav = new ModelAndView("fragments :: resultFragment");
         Document books = null;
         try
         {
@@ -42,15 +41,13 @@ public class ApiController
             books = this.naverService.searchBook(bookSearch);
         }
 
-        mav.addObject("data", books);
 
         // 검색 history save
         this.historyService.saveHistroy(History.builder()
                                                .username(principal.getName())
                                                .keyword(bookSearch.getKeyword())
                                                .build());
-
-        return mav;
+        return books;
     }
 
 

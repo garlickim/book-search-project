@@ -14,8 +14,6 @@ public class Document implements Serializable
 
     private List<Book>        books;
 
-    private Boolean           isEnd;
-
     private Integer           pageableCnt;
 
     private Integer           totalCnt;

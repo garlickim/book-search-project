@@ -132,8 +132,6 @@ public class KakaoServiceImpl extends ApiService
 
         return Document.builder()
                        .books(books)
-                       .isEnd(kakaoDocument.getMeta()
-                                           .getIs_end())
                        .totalCnt(kakaoDocument.getMeta()
                                               .getTotal_count())
                        .pageableCnt(kakaoDocument.getMeta()

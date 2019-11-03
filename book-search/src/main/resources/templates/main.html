@@ -8,7 +8,58 @@
     <link rel="stylesheet" th:href="@{css/main.css}"/>
     <script type="text/javascript" th:inline="javascript" th:src="@{js/jquery-3.4.1.js}"></script>
     <script type="text/javascript" th:inline="javascript" th:src="@{js/jquery.tmpl.min.js}"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{js/booksTemplate.js}"></script>
     <script type="text/javascript" th:inline="javascript">
+        // 히스토리 조회
+        function keywordHistory() {
+            $.ajax({
+                method: "get",
+                url: "/members/" + $("#username").val() + "/keywords",
+                contentType: "application/json;charset=UTF-8",
+                success: function (data) {   // success callback function
+                    $("#divHistory").html("");
+                    $("#historyList").tmpl(data).appendTo("#divHistory");
+                },
+                error: function (jqXhr, textStatus, errorMessage) { // error callback
+                    alert(errorMessage);
+                }
+            });
+        }
+
+        // 책 검색
+        function searchBooks(type, keyword, page, complete) {
+            if (keyword != lastKeyword) {
+                books = {};
+                lastKeyword = keyword;
+            }
+
+            if (books[page]) {
+                showSearchResult(type, keyword, {books: books[page], totalCnt: books['totalCnt']}, page);
+                console.log(books);
+            } else {
+                $.ajax({
+                    method: "post",
+                    url: "/book/search",
+                    data: JSON.stringify({
+                        type: type,
+                        keyword: keyword,
+                        page: page
+                    }),
+                    contentType: "application/json;charset=UTF-8",
+                    success: function (data) {   // success callback function
+                        books[page] = data.books;
+                        books['totalCnt'] = data.totalCnt;
+                        console.log(books);
+                        showSearchResult(type, keyword, data, page);
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) { // error callback
+                        alert(errorMessage);
+                    },
+                    complete: complete
+                })
+            }
+        }
+
         $().ready(function () {
             keywordHistory();
 
@@ -20,41 +71,9 @@
             });
 
             $("#searchProc").click(function () {
-                $.ajax({
-                    method: "post",
-                    url: "/book/search",
-                    data: JSON.stringify({
-                        type: $('input:radio[name=rdKeywordType]:checked').val(),
-                        keyword: $("#txtKeyword").val()
-                    }),
-                    contentType: "application/json;charset=UTF-8",
-                    success: function (data) {   // success callback function
-                        $("#divResult").html(data);
-                    },
-                    error: function (jqXhr, textStatus, errorMessage) { // error callback
-                        alert(errorMessage);
-                    },
-                    complete: function () {
-                        keywordHistory();
-                    }
-                });
+                searchBooks($('input:radio[name=rdKeywordType]:checked').val(), $("#txtKeyword").val(), 1, keywordHistory);
             });
 
-            // 히스토리 조회
-            function keywordHistory() {
-                $.ajax({
-                    method: "get",
-                    url: "/members/" + $("#username").val() + "/keywords",
-                    contentType: "application/json;charset=UTF-8",
-                    success: function (data) {   // success callback function
-                        $("#divHistory").html("");
-                        $("#historyList").tmpl(data).appendTo("#divHistory");
-                    },
-                    error: function (jqXhr, textStatus, errorMessage) { // error callback
-                        alert(errorMessage);
-                    }
-                });
-            }
         });
     </script>
 </head>
@@ -66,27 +85,30 @@
         <p>${searchTime}</p>
     </div>
 
+
+
+
+
+
+
 </script>
 <div>
     <!--<h1>도서 검색 페이지</h1>-->
     <input th:type="hidden" th:id="username" th:value="${username}">
-</div>
-<div>
+    <form id="logout" method="post" action="/user/logout">
+    </form>
     <input type="radio" name="rdKeywordType" id="title" value="1" checked> 제목
     <input type="radio" name="rdKeywordType" id="isbn" value="2"> ISBN
     <input type="radio" name="rdKeywordType" id="publisher" value="3"> 출판사
     <input type="radio" name="rdKeywordType" id="person" value="4"> 인명
     <input th:type="text" th:id="txtKeyword"/>
     <button id="searchProc">검색</button>
+    <span onclick="javascript:keywordHistory();">검색 히스토리</span>
+    <span onclick="javascript:$('form#logout').submit();">로그아웃</span>
 </div>
 
-<div id="divHistory">
-    <!--    <th:block th:replace="/fragments :: historyFragment"></th:block>-->
-</div>
-
-<div id="divKeywords">
-    <th:block th:replace="/fragments :: keywordsFragment"></th:block>
-</div>
+<div id="divHistory"></div>
+<div id="divContents"></div>
 
 </body>
 </html>
