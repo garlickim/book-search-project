@@ -5,7 +5,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class Document implements Serializable
+public class KakaoBook implements Serializable
 {
     private static final long serialVersionUID = -7331060734989726074L;
 

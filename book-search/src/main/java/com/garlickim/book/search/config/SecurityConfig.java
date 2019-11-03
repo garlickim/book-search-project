@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.garlickim.book.search.service.AccountService;
+import com.garlickim.book.search.service.impl.AccountServiceImpl;
 
 // Spring Security Config 파일
 @Configuration
@@ -19,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
 
     @Autowired
-    AccountService accountService;
+    AccountServiceImpl accountService;
 
 
 

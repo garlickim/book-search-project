@@ -1,4 +1,4 @@
-package com.garlickim.book.search.service;
+package com.garlickim.book.search.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -13,7 +13,7 @@ import com.garlickim.book.search.repository.AccountRepository;
 
 // User 인증 클래스
 @Service
-public class AccountService implements UserDetailsService
+public class AccountServiceImpl implements UserDetailsService
 {
 
     @Autowired

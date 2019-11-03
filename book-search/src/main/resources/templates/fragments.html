@@ -1,30 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="resultFragment">
-        <table>
-            <colgroup>
-                <col width="20%"/>
-                <col width="30%"/>
-                <col width="20%"/>
-                <col width="*%"/>
-            </colgroup>
-            <thead>
-            <tr>
-                <th>제목</th>
-                <th>소개</th>
-                <th>출판사</th>
-                <th>판매가</th>
+    <table>
+        <colgroup>
+            <col width="20%"/>
+            <col width="30%"/>
+            <col width="20%"/>
+            <col width="*%"/>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>제목</th>
+            <th>소개</th>
+            <th>출판사</th>
+            <th>판매가</th>
+        </tr>
+        </thead>
+        <div>
+            <tr th:each="doc : ${data?.books}">
+                <td th:text="${doc.title}"></td>
+                <td th:text="${doc.description}"></td>
+                <td th:text="${doc.publisher}"></td>
+                <td th:text="${doc.salesPrice}"></td>
             </tr>
-            </thead>
-            <div>
-                <tr th:each="doc : ${data?.documents}">
-                    <td th:text="${doc.title}"></td>
-                    <td th:text="${doc.contents}"></td>
-                    <td th:text="${doc.publisher}"></td>
-                    <td th:text="${doc.sale_price}"></td>
-                </tr>
-            </div>
-        </table>
+        </div>
+    </table>
 </div>
 
 <div th:fragment="historyFragment">
