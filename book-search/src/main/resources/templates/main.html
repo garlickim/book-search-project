@@ -92,11 +92,12 @@
 
 
 
+
 </script>
 <div>
     <!--<h1>도서 검색 페이지</h1>-->
     <input th:type="hidden" th:id="username" th:value="${username}">
-    <form id="logout" method="post" action="/user/logout">
+    <form id="logout" method="post" th:action="@{/user/logout}">
     </form>
     <input type="radio" name="rdKeywordType" id="title" value="1" checked> 제목
     <input type="radio" name="rdKeywordType" id="isbn" value="2"> ISBN
