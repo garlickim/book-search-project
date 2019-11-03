@@ -56,6 +56,10 @@ public class KakaoServiceImpl implements ApiService
                 queryParameter = "";
         }
 
+        if ( null != bookSearch.getPage() ) {
+            queryParameter += "&page=" + bookSearch.getPage();
+        }
+
         try
         {
             return "query=" + URLEncoder.encode(bookSearch.getKeyword(), "UTF-8") + queryParameter;
