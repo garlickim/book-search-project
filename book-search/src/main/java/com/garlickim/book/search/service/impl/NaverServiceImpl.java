@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,10 @@ public class NaverServiceImpl extends ApiService
                 queryParameter = "d_auth=";
                 break;
         }
+
+        queryParameter += Optional.ofNullable(bookSearch.getPage())
+                                  .map(page -> "&start=" + page)
+                                  .orElse("");
 
         try
         {

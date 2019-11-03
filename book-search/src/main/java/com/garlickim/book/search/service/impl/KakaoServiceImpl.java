@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,10 +67,9 @@ public class KakaoServiceImpl extends ApiService
                 queryParameter = "";
         }
 
-        if ( null != bookSearch.getPage() )
-        {
-            queryParameter += "&page=" + bookSearch.getPage();
-        }
+        queryParameter += Optional.ofNullable(bookSearch.getPage())
+                                  .map(page -> "&page=" + page)
+                                  .orElse("");
 
         try
         {
