@@ -1,4 +1,4 @@
-package com.garlickim.book.search.domain;
+package com.garlickim.book.search.domain.vo.kakao;
 
 import lombok.Data;
 

@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.garlickim.book.search.domain.Account;
+import com.garlickim.book.search.domain.entity.Account;
 import com.garlickim.book.search.service.impl.AccountServiceImpl;
 
 @RunWith(SpringRunner.class)
@@ -38,8 +38,8 @@ public class AccountTest
     public void index_anonymous() throws Exception
     {
         this.mockMvc.perform(get("/"))
-               .andDo(print())
-               .andExpect(status().isOk());
+                    .andDo(print())
+                    .andExpect(status().isOk());
     }
 
 
@@ -66,9 +66,9 @@ public class AccountTest
         String password = "1234";
         Account user = this.createUser(username, password);
         this.mockMvc.perform(formLogin().loginProcessingUrl("/user/login")
-                                   .user(user.getUsername())
-                                   .password(password))
-               .andExpect(authenticated());
+                                        .user(user.getUsername())
+                                        .password(password))
+                    .andExpect(authenticated());
     }
 
 
@@ -83,8 +83,8 @@ public class AccountTest
         String password = "1234";
         Account user = this.createUser(username, password);
         this.mockMvc.perform(formLogin().user(user.getUsername())
-                                   .password("12345"))
-               .andExpect(unauthenticated());
+                                        .password("12345"))
+                    .andExpect(unauthenticated());
     }
 
 
@@ -94,8 +94,8 @@ public class AccountTest
     private Account createUser(String username, String password)
     {
         return this.accountService.createNew(Account.builder()
-                                               .username(username)
-                                               .password(password)
-                                               .build());
+                                                    .username(username)
+                                                    .password(password)
+                                                    .build());
     }
 }

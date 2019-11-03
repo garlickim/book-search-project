@@ -1,16 +1,16 @@
-package com.garlickim.book.search.domain;
+package com.garlickim.book.search.domain.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
@@ -30,10 +30,6 @@ public class Account
     private String  password;
 
     private String  role;
-
-
-
-
 
     public void encodePassword(PasswordEncoder passwordEncoder)
     {

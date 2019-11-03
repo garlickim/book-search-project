@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.garlickim.book.search.domain.Account;
+import com.garlickim.book.search.domain.entity.Account;
 import com.garlickim.book.search.service.impl.AccountServiceImpl;
 
 @Controller

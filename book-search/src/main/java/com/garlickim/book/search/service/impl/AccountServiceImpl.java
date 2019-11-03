@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.garlickim.book.search.domain.Account;
+import com.garlickim.book.search.domain.entity.Account;
 import com.garlickim.book.search.repository.AccountRepository;
 
 // User 인증 클래스
@@ -21,10 +21,6 @@ public class AccountServiceImpl implements UserDetailsService
 
     @Autowired
     PasswordEncoder   passwordEncoder;  // SecuriryConfig.java에서 Bcrypt를 기본 encoder로 설정하였다.
-
-
-
-
 
     // 사용자 인증 메소드
     @Override

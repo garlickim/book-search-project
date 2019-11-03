@@ -1,4 +1,4 @@
-package com.garlickim.book.search.domain;
+package com.garlickim.book.search.domain.vo.kakao;
 
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ public class KakaoBook implements Serializable
     // 도서 소개
     private String            contents;
 
-    // 도서 상세 UR
+    // 도서 상세 URL
     private String            url;
 
     // 국제 표준 도서번호(ISBN10 ISBN13) (ISBN10,ISBN13 중 하나 이상 존재하며, ' '(공백)을 구분자로 출력됩니다)

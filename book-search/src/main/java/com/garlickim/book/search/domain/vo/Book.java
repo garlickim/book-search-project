@@ -1,13 +1,14 @@
-package com.garlickim.book.search.vo;
+package com.garlickim.book.search.domain.vo;
+
+import java.io.Serializable;
 
 import lombok.Builder;
 import lombok.Data;
 
-import java.io.Serializable;
-
 @Data
 @Builder
-public class Book implements Serializable {
+public class Book implements Serializable
+{
 
     // 도서 제목
     private String title;

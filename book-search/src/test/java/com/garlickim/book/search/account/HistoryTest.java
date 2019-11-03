@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.garlickim.book.search.domain.History;
+import com.garlickim.book.search.domain.entity.History;
 import com.garlickim.book.search.repository.HistoryRepository;
 import com.garlickim.book.search.repository.HistoryStatistics;
 import com.garlickim.book.search.service.impl.AccountServiceImpl;
@@ -38,24 +38,24 @@ public class HistoryTest
 
         IntStream.range(0, 3)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic")
-                                                             .keyword("토익")
-                                                             .build()));
+                                                                  .username("garlic")
+                                                                  .keyword("토익")
+                                                                  .build()));
         IntStream.range(0, 1)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic2")
-                                                             .keyword("오픽")
-                                                             .build()));
+                                                                  .username("garlic2")
+                                                                  .keyword("오픽")
+                                                                  .build()));
         IntStream.range(0, 1)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic")
-                                                             .keyword("텝스")
-                                                             .build()));
+                                                                  .username("garlic")
+                                                                  .keyword("텝스")
+                                                                  .build()));
         IntStream.range(0, 1)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic")
-                                                             .keyword("토플")
-                                                             .build()));
+                                                                  .username("garlic")
+                                                                  .keyword("토플")
+                                                                  .build()));
     }
 
 
@@ -105,64 +105,64 @@ public class HistoryTest
 
         IntStream.range(0, 4)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic")
-                                                             .keyword("자료구조")
-                                                             .build()));
+                                                                  .username("garlic")
+                                                                  .keyword("자료구조")
+                                                                  .build()));
         IntStream.range(0, 2)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic")
-                                                             .keyword("경제학")
-                                                             .build()));
+                                                                  .username("garlic")
+                                                                  .keyword("경제학")
+                                                                  .build()));
         IntStream.range(0, 3)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic")
-                                                             .keyword("미술")
-                                                             .build()));
+                                                                  .username("garlic")
+                                                                  .keyword("미술")
+                                                                  .build()));
         IntStream.range(0, 1)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic")
-                                                             .keyword("음악")
-                                                             .build()));
+                                                                  .username("garlic")
+                                                                  .keyword("음악")
+                                                                  .build()));
         IntStream.range(0, 6)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic")
-                                                             .keyword("토론")
-                                                             .build()));
+                                                                  .username("garlic")
+                                                                  .keyword("토론")
+                                                                  .build()));
         IntStream.range(0, 2)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic")
-                                                             .keyword("열정")
-                                                             .build()));
+                                                                  .username("garlic")
+                                                                  .keyword("열정")
+                                                                  .build()));
         IntStream.range(0, 7)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic")
-                                                             .keyword("자기개발")
-                                                             .build()));
+                                                                  .username("garlic")
+                                                                  .keyword("자기개발")
+                                                                  .build()));
         IntStream.range(0, 1)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic")
-                                                             .keyword("스터디")
-                                                             .build()));
+                                                                  .username("garlic")
+                                                                  .keyword("스터디")
+                                                                  .build()));
         IntStream.range(0, 1)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic")
-                                                             .keyword("정보통신")
-                                                             .build()));
+                                                                  .username("garlic")
+                                                                  .keyword("정보통신")
+                                                                  .build()));
         IntStream.range(0, 3)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic")
-                                                             .keyword("알고리즘")
-                                                             .build()));
+                                                                  .username("garlic")
+                                                                  .keyword("알고리즘")
+                                                                  .build()));
         IntStream.range(0, 1)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic")
-                                                             .keyword("기술분석")
-                                                             .build()));
+                                                                  .username("garlic")
+                                                                  .keyword("기술분석")
+                                                                  .build()));
         IntStream.range(0, 2)
                  .forEach(i -> this.historyRepository.save(History.builder()
-                                                             .username("garlic")
-                                                             .keyword("JSP")
-                                                             .build()));
+                                                                  .username("garlic")
+                                                                  .keyword("JSP")
+                                                                  .build()));
 
         List<HistoryStatistics> byKeywordAndCount = this.historyService.findByKeywordAndCount();
 

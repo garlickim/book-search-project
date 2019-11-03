@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.garlickim.book.search.domain.BookSearch;
-import com.garlickim.book.search.domain.History;
+import com.garlickim.book.search.domain.entity.History;
+import com.garlickim.book.search.domain.vo.BookSearch;
+import com.garlickim.book.search.domain.vo.Document;
 import com.garlickim.book.search.repository.HistoryStatistics;
 import com.garlickim.book.search.service.impl.HistoryServiceImpl;
 import com.garlickim.book.search.service.impl.KakaoServiceImpl;
 import com.garlickim.book.search.service.impl.NaverServiceImpl;
-import com.garlickim.book.search.vo.Document;
 
 @RestController
 public class ApiController
@@ -32,7 +32,16 @@ public class ApiController
     public ModelAndView procBookSearch(Principal principal, @RequestBody BookSearch bookSearch)
     {
         ModelAndView mav = new ModelAndView("fragments :: resultFragment");
-        Document books = this.kakaoService.searchBook(bookSearch);
+        Document books = null;
+        try
+        {
+            books = this.kakaoService.searchBook(bookSearch);
+        }
+        catch ( Exception e )
+        {
+            books = this.naverService.searchBook(bookSearch);
+        }
+
         mav.addObject("data", books);
 
         // 검색 history save

@@ -1,10 +1,10 @@
 package com.garlickim.book.search.service.impl;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,15 +13,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.garlickim.book.search.domain.BookSearch;
-import com.garlickim.book.search.domain.KakaoDocument;
+import com.garlickim.book.search.domain.vo.Book;
+import com.garlickim.book.search.domain.vo.BookSearch;
+import com.garlickim.book.search.domain.vo.Document;
+import com.garlickim.book.search.domain.vo.kakao.KakaoDocument;
 import com.garlickim.book.search.exception.BookSearchException;
 import com.garlickim.book.search.service.ApiService;
-import com.garlickim.book.search.vo.Book;
-import com.garlickim.book.search.vo.Document;
 
 @Service
-public class KakaoServiceImpl implements ApiService
+public class KakaoServiceImpl extends ApiService
 {
 
     @Autowired
@@ -34,7 +34,17 @@ public class KakaoServiceImpl implements ApiService
     String       kakaoApiKey;
 
     @Override
-    public String getQueryParameter(BookSearch bookSearch)
+    protected String getUrl()
+    {
+        return this.apiUrl;
+    }
+
+
+
+
+
+    @Override
+    protected String getQueryParameter(BookSearch bookSearch)
     {
         String queryParameter = "&target=";
 
@@ -56,7 +66,8 @@ public class KakaoServiceImpl implements ApiService
                 queryParameter = "";
         }
 
-        if ( null != bookSearch.getPage() ) {
+        if ( null != bookSearch.getPage() )
+        {
             queryParameter += "&page=" + bookSearch.getPage();
         }
 
@@ -75,7 +86,7 @@ public class KakaoServiceImpl implements ApiService
 
 
     @Override
-    public void setProperty(HttpURLConnection connection)
+    protected void setProperty(HttpURLConnection connection)
     {
         try
         {
@@ -84,7 +95,7 @@ public class KakaoServiceImpl implements ApiService
         }
         catch ( ProtocolException e )
         {
-            throw new BookSearchException("SET PROPERTY ERROR");
+            throw new BookSearchException("SET PROPERTY ERROR", e);
         }
     }
 
@@ -93,60 +104,17 @@ public class KakaoServiceImpl implements ApiService
 
 
     @Override
-    public Document searchBook(BookSearch bookSearch)
+    public Document convertBook(String str)
     {
+        KakaoDocument kakaoDocument = null;
         try
         {
-            URL url = new URL(this.apiUrl + getQueryParameter(bookSearch));
-            final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-            try ( AutoCloseable a = () -> connection.disconnect() )
-            {
-
-                setProperty(connection);
-
-                if ( connection.getResponseCode() != 200 )
-                {
-                    throw new BookSearchException();
-                }
-
-                String inputLine = null;
-                StringBuffer sb = new StringBuffer();
-
-                try ( final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8")) )
-                {
-                    while ( (inputLine = in.readLine()) != null )
-                    {
-                        sb.append(inputLine);
-                    }
-                }
-
-                return convertBook(sb.toString());
-            }
-
-        }
-        catch ( MalformedURLException e )
-        {
-            throw new BookSearchException("URL CREATE ERROR");
+            kakaoDocument = this.objectMapper.readValue(str, KakaoDocument.class);
         }
         catch ( IOException e )
         {
-            throw new BookSearchException("URL CONNECTION OPEN ERROR");
+            throw new BookSearchException("READVALUE ERROR", e);
         }
-        catch ( Exception e )
-        {
-            throw new BookSearchException("URL CONNECTION OPEN ERROR");
-        }
-    }
-
-
-
-
-
-    @Override
-    public Document convertBook(String str) throws IOException
-    {
-        KakaoDocument kakaoDocument = this.objectMapper.readValue(str, KakaoDocument.class);
 
         List<Book> books = kakaoDocument.getDocuments()
                                         .stream()
