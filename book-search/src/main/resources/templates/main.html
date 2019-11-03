@@ -12,6 +12,7 @@
     $().ready(function () {
 
         keywordHistory();
+        searchKeywords();
 
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
@@ -37,9 +38,11 @@
                 },
                 complete: function () {
                     keywordHistory();
+                    searchKeywords();
                 }
             });
         });
+
 
 
         // 히스토리 조회
@@ -56,6 +59,22 @@
                 }
             });
         }
+
+        // 인기 검색어 조회
+        function searchKeywords() {
+            $.ajax({
+                method: "get",
+                url: "/keywords",
+                contentType: "application/json;charset=UTF-8",
+                success: function (data) {   // success callback function
+                    $("#divKeywords").html(data);
+                },
+                error: function (jqXhr, textStatus, errorMessage) { // error callback
+                    alert(errorMessage);
+                }
+            });
+        }
+
     });
 </script>
 
@@ -77,6 +96,10 @@
 
 <div id="divHistory">
     <th:block th:replace="/fragments :: historyFragment"></th:block>
+</div>
+
+<div id="divKeywords">
+    <th:block th:replace="/fragments :: keywordsFragment"></th:block>
 </div>
 
 </body>

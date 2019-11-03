@@ -34,4 +34,11 @@
         <p th:text="${#dates.format(history?.searchTime, 'yyyy-MM-dd HH:mm:sss')}"></p>
     </div>
 </div>
+
+<div th:fragment="keywordsFragment">
+    <div th:each="keywords : ${data}">
+        <p th:text="${keywords?.keyword}"></p>
+        <p th:text="${keywords?.cnt}"></p>
+    </div>
+</div>
 </html>

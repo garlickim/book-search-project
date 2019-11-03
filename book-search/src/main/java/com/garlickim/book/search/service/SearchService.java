@@ -13,6 +13,7 @@ import java.util.List;
 import com.garlickim.book.search.domain.BookSearch;
 import com.garlickim.book.search.domain.History;
 import com.garlickim.book.search.repository.HistoryRepository;
+import com.garlickim.book.search.repository.HistoryStatistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -135,6 +136,10 @@ public class SearchService {
         ArrayList<History> histories = historyRepository.findByUsernameOrderBySearchTimeDesc(username);
 
         return histories;
+    }
+
+    public ArrayList<HistoryStatistics> findByKeywordAndCount() {
+        return historyRepository.findByKeywordAndCount();
     }
 
 }
