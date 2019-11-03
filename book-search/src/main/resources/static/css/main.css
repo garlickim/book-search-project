@@ -1,0 +1,22 @@
+* {
+    box-sizing: border-box;
+}
+
+#divHistory {
+    float: left;
+    width: 20%;
+    font-size: 12pt;
+}
+
+#divHistory div {
+    padding: 5px;
+}
+
+#divHistory p {
+    margin: 0;
+}
+
+#divResult {
+    float: left;
+    width: 80%;
+}

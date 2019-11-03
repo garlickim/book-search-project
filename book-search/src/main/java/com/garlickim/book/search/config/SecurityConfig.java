@@ -21,16 +21,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     @Autowired
     AccountServiceImpl accountService;
 
-
-
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-
         http.authorizeRequests()
-            .antMatchers("/", "/info", "/signup", "/user/signup", "/user/login", "/h2console/**")
+            .antMatchers("/info", "/signup", "/user/**", "/h2console/**")
             .permitAll() // 해당 URL에 대하여 로그인없이 접근할 수 있도록 인가
             .anyRequest()
             .authenticated(); // 나머지 URL에 대하여 로그인이 필요
@@ -44,7 +39,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 
         http.formLogin()
             .loginPage("/user/login")
-            .defaultSuccessUrl("/main");
+            .defaultSuccessUrl("/");
+
+        http.logout()
+            .logoutUrl("/user/logout")
+            .logoutSuccessUrl("/")
+            .invalidateHttpSession(true)
+            .deleteCookies("JSESSIONID");
 
         // http 인증 방식 중, basic 인증(Base64 인코딩) 사용
         http.httpBasic();
