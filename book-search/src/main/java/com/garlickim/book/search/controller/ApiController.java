@@ -41,7 +41,6 @@ public class ApiController
             books = this.naverService.searchBook(bookSearch);
         }
 
-
         // 검색 history save
         this.historyService.saveHistroy(History.builder()
                                                .username(principal.getName())
@@ -54,7 +53,7 @@ public class ApiController
 
 
 
-    @GetMapping("/members/{username}/keywords")
+    @GetMapping("/users/{username}/keywords")
     public List<History> procKeywordHistory(@PathVariable String username)
     {
         return this.historyService.findKeywordHistory(username);

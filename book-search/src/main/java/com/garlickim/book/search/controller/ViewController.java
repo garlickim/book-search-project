@@ -39,7 +39,7 @@ public class ViewController
 
 
     // 회원가입 페이지
-    @GetMapping("/signup")
+    @GetMapping("/user/signup")
     public String viewSignUp(Model model, Principal principal)
     {
         return "signup";
@@ -50,7 +50,7 @@ public class ViewController
 
 
     // 회원가입 로직
-    @PostMapping("/user/signup")
+    @PostMapping("/users")
     public String procSignup(Account account)
     {
         this.accountService.createNew(account);

@@ -14,7 +14,7 @@
         function keywordHistory() {
             $.ajax({
                 method: "get",
-                url: "/members/" + $("#username").val() + "/keywords",
+                url: "/users/" + $("#username").val() + "/keywords",
                 contentType: "application/json;charset=UTF-8",
                 success: function (data) {   // success callback function
                     $("#divHistory").html("");
@@ -84,6 +84,7 @@
         <p>${keyword}</p>
         <p>${searchTime}</p>
     </div>
+
 
 
 

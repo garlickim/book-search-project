@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         http.authorizeRequests()
-            .antMatchers("/info", "/signup", "/user/**", "/h2console/**")
+            .antMatchers("/users", "/user/**", "/h2console/**")
             .permitAll() // 해당 URL에 대하여 로그인없이 접근할 수 있도록 인가
             .anyRequest()
             .authenticated(); // 나머지 URL에 대하여 로그인이 필요
@@ -68,7 +68,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     @Bean
     public PasswordEncoder passwordEncoder()
     {
-
         // 기본 패스워드 인코더를 Bcrypt로 설정 (security 5 이전에는 NoOpPasswordEncoder를 기본으로 사용함)
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
