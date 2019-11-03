@@ -30,10 +30,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     {
 
         http.authorizeRequests()
-            .mvcMatchers("/", "/info", "/signup", "/user/signup", "/user/login", "/h2console/*")
+            .antMatchers("/", "/info", "/signup", "/user/signup", "/user/login", "/h2console/**")
             .permitAll() // 해당 URL에 대하여 로그인없이 접근할 수 있도록 인가
             .anyRequest()
             .authenticated(); // 나머지 URL에 대하여 로그인이 필요
+
+        http.csrf()
+            .ignoringAntMatchers("/h2console/**");
+
+        http.headers()
+            .frameOptions()
+            .disable();
 
         http.formLogin()
             .loginPage("/user/login")
