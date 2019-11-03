@@ -1,10 +1,10 @@
 package com.garlickim.book.search.service.impl;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -71,14 +71,7 @@ public class KakaoServiceImpl extends ApiService
                                   .map(page -> "&page=" + page)
                                   .orElse("");
 
-        try
-        {
-            return "query=" + URLEncoder.encode(bookSearch.getKeyword(), "UTF-8") + queryParameter;
-        }
-        catch ( UnsupportedEncodingException e )
-        {
-            throw new BookSearchException();
-        }
+        return "query=" + URLEncoder.encode(bookSearch.getKeyword(), StandardCharsets.UTF_8) + queryParameter;
     }
 
 

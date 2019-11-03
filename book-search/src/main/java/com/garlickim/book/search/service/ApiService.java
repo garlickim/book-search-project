@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import com.garlickim.book.search.domain.vo.BookSearch;
 import com.garlickim.book.search.domain.vo.Document;
@@ -51,7 +52,7 @@ public abstract class ApiService
                 String inputLine = null;
                 StringBuffer sb = new StringBuffer();
 
-                try ( final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8")) )
+                try ( final BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)) )
                 {
                     while ( (inputLine = in.readLine()) != null )
                     {
@@ -73,9 +74,9 @@ public abstract class ApiService
         }
         catch ( Exception e )
         {
-            throw new BookSearchException("KAKAO SEARCH BOOK API ERROR", e);
+            throw new BookSearchException("SEARCH BOOK API ERROR", e);
         }
-    };
+    }
 
 
 

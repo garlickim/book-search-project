@@ -1,10 +1,10 @@
 package com.garlickim.book.search.service.impl;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -66,14 +66,7 @@ public class NaverServiceImpl extends ApiService
                                   .map(page -> "&start=" + page)
                                   .orElse("");
 
-        try
-        {
-            return queryParameter + URLEncoder.encode(bookSearch.getKeyword(), "UTF-8");
-        }
-        catch ( UnsupportedEncodingException e )
-        {
-            throw new BookSearchException();
-        }
+        return queryParameter + URLEncoder.encode(bookSearch.getKeyword(), StandardCharsets.UTF_8);
     }
 
 
@@ -126,8 +119,6 @@ public class NaverServiceImpl extends ApiService
                                                               .salesPrice(naverBook.getDiscount())
                                                               .build())
                                         .collect(Collectors.toList());
-
-        Boolean isEnd = (naverDocument.getTotal() / 10 == naverDocument.getStart()) ? false : true;
 
         return Document.builder()
                        .books(books)
