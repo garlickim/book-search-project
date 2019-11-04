@@ -1,6 +1,11 @@
 package com.garlickim.book.search.domain.vo.naver;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -31,12 +36,21 @@ public class NaverBook implements Serializable
     private String            publisher;
 
     // 출간일
-    private String            pubdate;
+    @JsonFormat(pattern = "yyyyMMdd",
+                timezone = "Asia/Seoul")
+    private Date              pubdate;
 
     // 국제 표준 도서번호
     private String            isbn;
 
     // 도서 소개
     private String            description;
+
+    // Date type의 pubdate을 yyyy-MM-dd 포멧의 String으로 변경
+    public String getPubdate()
+    {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(this.pubdate);
+    }
 
 }

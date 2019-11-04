@@ -1,6 +1,12 @@
 package com.garlickim.book.search.domain.vo.kakao;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -22,7 +28,9 @@ public class KakaoBook implements Serializable
     private String            isbn;
 
     // 도서 출판날짜. ISO 8601. [YYYY]-[MM]-[DD]T[hh]:[mm]:[ss].000+[tz]
-    private String            datetime;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX",
+                timezone = "Asia/Seoul")
+    private Instant           datetime;
 
     // 도서 저자 리스트
     private String[]          authors;
@@ -44,5 +52,15 @@ public class KakaoBook implements Serializable
 
     // 도서 판매 상태 정보
     private String            status;
+
+    // Instant type의 datetime을 yyyy-MM-dd 포멧의 String으로 변경
+    public String getDatetime()
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                                                       .withLocale(Locale.getDefault())
+                                                       .withZone(TimeZone.getTimeZone("Asia/Seoul")
+                                                                         .toZoneId());
+        return formatter.format(this.datetime);
+    }
 
 }
