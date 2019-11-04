@@ -27,7 +27,7 @@ var pageTemplate = "<span>" +
     "{{if pageNum == currentPage}}" +
     "<b>${pageText}</b>" +
     "{{else}}" +
-    "<a onclick=\"javascript:searchBooks('${type}', '${keyword}', ${pageNum})\">${pageText}</a>" +
+    "<a onclick=\"searchBooks('${type}', '${keyword}', ${pageNum})\">${pageText}</a>" +
     "{{/if}}" +
     "</span>";
 
@@ -42,35 +42,28 @@ function showPageList(type, keyword, totalCount, currentPage) {
     var prev = startPage - 1;
 
     var pages = [];
-    if (prev > 0) {
+
+    function addPage(pageNum, pageText) {
         pages.push({
             type: type,
             keyword: keyword,
-            pageNum: prev,
-            pageText: "<<",
-            currentPage: currentPage
-        });
-    }
-    for (var i = startPage; i <= endPage; i++) {
-        pages.push({
-            type: type,
-            keyword: keyword,
-            pageNum: i,
-            pageText: i,
-            currentPage: currentPage
-        });
-    }
-    if (next < totalPage) {
-        pages.push({
-            type: type,
-            keyword: keyword,
-            pageNum: next,
-            pageText: ">>",
+            pageNum: pageNum,
+            pageText: pageText,
             currentPage: currentPage
         });
     }
 
-    console.log(pages);
+    if (prev > 0) {
+        addPage(prev, '<<');
+    }
+    for (var i = startPage; i <= endPage; i++) {
+        addPage(i, i);
+    }
+    if (next < totalPage) {
+        console.log(next, totalPage);
+        addPage(next, '>>');
+    }
+
     $("#pageList").html("");
     $.tmpl(pageTemplate, pages).appendTo("#pageList");
 }

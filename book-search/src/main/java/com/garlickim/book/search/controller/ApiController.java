@@ -2,6 +2,7 @@ package com.garlickim.book.search.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,10 +43,14 @@ public class ApiController
         }
 
         // 검색 history save
-        this.historyService.saveHistroy(History.builder()
-                                               .username(principal.getName())
-                                               .keyword(bookSearch.getKeyword())
-                                               .build());
+        Optional.ofNullable(bookSearch)
+                .filter(req -> req.getPage() == 1)
+                .map(req -> History.builder()
+                                   .username(principal.getName())
+                                   .keyword(req.getKeyword())
+                                   .build())
+                .ifPresent(this.historyService::saveHistroy);
+
         return books;
     }
 
