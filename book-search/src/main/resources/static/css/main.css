@@ -36,3 +36,7 @@ div.book span {
 #pageList span > * {
     margin: 12px 5px 12px 0;
 }
+
+#txtKeyword {
+    margin-left: 15px;
+}

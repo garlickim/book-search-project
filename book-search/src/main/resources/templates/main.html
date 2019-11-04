@@ -20,6 +20,8 @@
                 xhr.setRequestHeader(header, token);
             });
 
+            showKeywordsRank();
+
             $("#searchProc").click(function () {
                 searchBooks($('input:radio[name=rdKeywordType]:checked').val(), $("#txtKeyword").val(), 1, showKeywordsRank);
             });
@@ -28,7 +30,6 @@
 </head>
 <body>
 <div>
-    <!--<h1>도서 검색 페이지</h1>-->
     <input th:type="hidden" th:id="username" th:value="${username}">
     <form id="logout" method="post" th:action="@{/user/logout}">
     </form>
@@ -38,8 +39,8 @@
     <input type="radio" name="rdKeywordType" id="person" value="4"> 인명
     <input th:type="text" th:id="txtKeyword"/>
     <button id="searchProc">검색</button>
-    <span onclick="showKeywordHistory();">검색 히스토리</span>
-    <span onclick="$('form#logout').submit();">로그아웃</span>
+    <button onclick="showKeywordHistory();">검색 히스토리</button>
+    <button onclick="$('form#logout').submit();">로그아웃</button>
 </div>
 
 <div id="divKeywords">
