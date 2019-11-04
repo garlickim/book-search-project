@@ -8,61 +8,10 @@
     <link rel="stylesheet" th:href="@{css/main.css}"/>
     <script type="text/javascript" th:inline="javascript" th:src="@{js/jquery-3.4.1.js}"></script>
     <script type="text/javascript" th:inline="javascript" th:src="@{js/jquery.tmpl.min.js}"></script>
-    <script type="text/javascript" th:inline="javascript" th:src="@{js/booksTemplate.js}"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{js/books.js}"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{js/history.js}"></script>
     <script type="text/javascript" th:inline="javascript">
-        // 히스토리 조회
-        function keywordHistory() {
-            $.ajax({
-                method: "get",
-                url: "/users/" + $("#username").val() + "/keywords",
-                contentType: "application/json;charset=UTF-8",
-                success: function (data) {   // success callback function
-                    $("#divHistory").html("");
-                    $("#historyList").tmpl(data).appendTo("#divHistory");
-                },
-                error: function (jqXhr, textStatus, errorMessage) { // error callback
-                    alert(errorMessage);
-                }
-            });
-        }
-
-        // 책 검색
-        function searchBooks(type, keyword, page, complete) {
-            if (keyword != lastKeyword) {
-                books = {};
-                lastKeyword = keyword;
-            }
-
-            if (books[page]) {
-                showSearchResult({books: books[page], totalCnt: books['totalCnt']}, type, keyword, page);
-                console.log(books);
-            } else {
-                $.ajax({
-                    method: "post",
-                    url: "/book/search",
-                    data: JSON.stringify({
-                        type: type,
-                        keyword: keyword,
-                        page: page
-                    }),
-                    contentType: "application/json;charset=UTF-8",
-                    success: function (data) {   // success callback function
-                        books[page] = data.books;
-                        books['totalCnt'] = data.totalCnt;
-                        console.log(books);
-                        showSearchResult(data, type, keyword, page);
-                    },
-                    error: function (jqXhr, textStatus, errorMessage) { // error callback
-                        alert(errorMessage);
-                    },
-                    complete: complete
-                })
-            }
-        }
-
         $().ready(function () {
-            keywordHistory();
-
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
 
@@ -70,33 +19,17 @@
                 xhr.setRequestHeader(header, token);
             });
 
-            $("#searchProc").click(function () {
-                searchBooks($('input:radio[name=rdKeywordType]:checked').val(), $("#txtKeyword").val(), 1, keywordHistory);
-            });
+            var showKeywordsRank = function () {
 
+            };
+
+            $("#searchProc").click(function () {
+                searchBooks($('input:radio[name=rdKeywordType]:checked').val(), $("#txtKeyword").val(), 1, showKeywordsRank);
+            });
         });
     </script>
 </head>
 <body>
-<script id="historyList" type="text/x-jquery-templ">
-    <div>
-        <p>${username}</p>
-        <p>${keyword}</p>
-        <p>${searchTime}</p>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-</script>
 <div>
     <!--<h1>도서 검색 페이지</h1>-->
     <input th:type="hidden" th:id="username" th:value="${username}">
@@ -108,11 +41,11 @@
     <input type="radio" name="rdKeywordType" id="person" value="4"> 인명
     <input th:type="text" th:id="txtKeyword"/>
     <button id="searchProc">검색</button>
-    <span onclick="javascript:keywordHistory();">검색 히스토리</span>
-    <span onclick="javascript:$('form#logout').submit();">로그아웃</span>
+    <span onclick="keywordHistory();">검색 히스토리</span>
+    <span onclick="$('form#logout').submit();">로그아웃</span>
 </div>
 
-<div id="divHistory"></div>
+<div id="divKeywords"></div>
 <div id="divContents"></div>
 
 </body>

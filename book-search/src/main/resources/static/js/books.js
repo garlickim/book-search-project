@@ -1,10 +1,40 @@
-var bookList = "<div>" +
-    "<div id='bookList'></div>" +
-    "<div id='pageList'></div>" +
-    "</div>";
+// 책 검색
+function searchBooks(type, keyword, page, complete) {
+    if (keyword != lastKeyword) {
+        books = {};
+        lastKeyword = keyword;
+    }
+
+    if (books[page]) {
+        showSearchResult({books: books[page], totalCnt: books['totalCnt']}, type, keyword, page);
+    } else {
+        $.ajax({
+            method: "post",
+            url: "/book/search",
+            data: JSON.stringify({
+                type: type,
+                keyword: keyword,
+                page: page
+            }),
+            contentType: "application/json;charset=UTF-8",
+            success: function (data) {   // success callback function
+                books[page] = data.books;
+                books['totalCnt'] = data.totalCnt;
+                showSearchResult(data, type, keyword, page);
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback
+                alert(errorMessage);
+            },
+            complete: complete
+        })
+    }
+}
 
 function showSearchResult(data, type, keyword, page) {
-    $("#divContents").html(bookList);
+    $("#divContents").html("<div>" +
+        "   <div id='bookList'></div>" +
+        "   <div id='pageList'></div>" +
+        "</div>");
     showBookList(data.books, type, keyword, page);
     showPageList(type, keyword, data.totalCnt, page);
 }
@@ -20,7 +50,6 @@ function showBookList(bookList, type, keyword, page) {
 
 function showBookDetail(index, type, keyword, page) {
     $('#divContents').html('');
-    console.log({book: books[page][index]});
     $.tmpl(bookDetailTemplate, {
         book: books[page][index],
         type: type,
@@ -58,7 +87,6 @@ function showPageList(type, keyword, totalCount, currentPage) {
         addPage(i, i);
     }
     if (next < totalPage) {
-        console.log(next, totalPage);
         addPage(next, '>>');
     }
 
