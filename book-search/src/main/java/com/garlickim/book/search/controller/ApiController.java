@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.garlickim.book.search.domain.entity.History;
 import com.garlickim.book.search.domain.vo.BookSearch;
@@ -69,15 +68,9 @@ public class ApiController
 
 
     @GetMapping("/keywords")
-    public ModelAndView procKeywords()
+    public List<HistoryStatistics> procKeywords()
     {
-        ModelAndView mav = new ModelAndView("fragments :: keywordsFragment");
-
-        List<HistoryStatistics> byKeywordAndCount = this.historyService.findByKeywordAndCount();
-
-        mav.addObject("data", byKeywordAndCount);
-
-        return mav;
+        return this.historyService.findByKeywordAndCount();
     }
 
 }

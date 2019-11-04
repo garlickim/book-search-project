@@ -6,17 +6,17 @@ a, button, [onclick] {
     cursor: pointer;
 }
 
-#divHistory {
+#divKeywords {
     float: left;
     width: 20%;
     font-size: 12pt;
 }
 
-#divHistory div {
+#divKeywords div {
     padding: 5px;
 }
 
-#divHistory p {
+#divKeywords p {
     margin: 0;
 }
 

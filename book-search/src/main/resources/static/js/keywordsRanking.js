@@ -1,12 +1,11 @@
-// 히스토리 조회
-function showKeywordHistory() {
+function showKeywordsRank() {
     $.ajax({
         method: "get",
-        url: "/users/" + $("#username").val() + "/keywords",
+        url: "/keywords",
         contentType: "application/json;charset=UTF-8",
         success: function (data) {   // success callback function
-            $("#divContents").html("");
-            $.tmpl(historyListTemplate, data).appendTo("#divContents");
+            $("#divKeywords>div").html("");
+            $.tmpl(keywordsRankTemplate, data).appendTo("#divKeywords>div");
         },
         error: function (jqXhr, textStatus, errorMessage) { // error callback
             alert(errorMessage);
@@ -14,7 +13,8 @@ function showKeywordHistory() {
     });
 }
 
-var historyListTemplate = "<div>" +
+var keywordsRankTemplate = "<div>" +
     "   <span>${keyword}</span>" +
-    "   <span>(${searchTime})</span>" +
+    "   <span>(${cnt})</span>" +
     "</div>";
+

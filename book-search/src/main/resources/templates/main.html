@@ -10,6 +10,7 @@
     <script type="text/javascript" th:inline="javascript" th:src="@{js/jquery.tmpl.min.js}"></script>
     <script type="text/javascript" th:inline="javascript" th:src="@{js/books.js}"></script>
     <script type="text/javascript" th:inline="javascript" th:src="@{js/history.js}"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{js/keywordsRanking.js}"></script>
     <script type="text/javascript" th:inline="javascript">
         $().ready(function () {
             var token = $("meta[name='_csrf']").attr("content");
@@ -18,10 +19,6 @@
             $(document).ajaxSend(function (e, xhr) {
                 xhr.setRequestHeader(header, token);
             });
-
-            var showKeywordsRank = function () {
-
-            };
 
             $("#searchProc").click(function () {
                 searchBooks($('input:radio[name=rdKeywordType]:checked').val(), $("#txtKeyword").val(), 1, showKeywordsRank);
@@ -41,11 +38,14 @@
     <input type="radio" name="rdKeywordType" id="person" value="4"> 인명
     <input th:type="text" th:id="txtKeyword"/>
     <button id="searchProc">검색</button>
-    <span onclick="keywordHistory();">검색 히스토리</span>
+    <span onclick="showKeywordHistory();">검색 히스토리</span>
     <span onclick="$('form#logout').submit();">로그아웃</span>
 </div>
 
-<div id="divKeywords"></div>
+<div id="divKeywords">
+    <h3>인기 검색어</h3>
+    <div></div>
+</div>
 <div id="divContents"></div>
 
 </body>
