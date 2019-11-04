@@ -1,6 +1,7 @@
 package com.garlickim.book.search.service.impl;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URLEncoder;
@@ -65,7 +66,14 @@ public class NaverServiceImpl extends ApiService
                 throw new BookSearchException("BOOK SEARCH TYPE ERROR : " + bookSearch.getType());
         }
 
-        queryParameter += URLEncoder.encode(bookSearch.getKeyword(), StandardCharsets.UTF_8);
+        try
+        {
+            queryParameter += URLEncoder.encode(bookSearch.getKeyword(), StandardCharsets.UTF_8.name());
+        }
+        catch ( UnsupportedEncodingException e )
+        {
+            throw new BookSearchException("URL ENCODER ERROR : ", e);
+        }
 
         queryParameter += Optional.ofNullable(bookSearch.getPage())
                                   .map(page -> "&start=" + page)
