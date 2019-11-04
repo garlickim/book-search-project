@@ -3,33 +3,31 @@ var bookList = "<div>" +
     "<div id='pageList'></div>" +
     "</div>";
 
-function showSearchResult(type, keyword, data, page) {
+function showSearchResult(data, type, keyword, page) {
     $("#divContents").html(bookList);
-    showBookList(keyword, data.books, page);
+    showBookList(data.books, type, keyword, page);
     showPageList(type, keyword, data.totalCnt, page);
 }
 
 var books = {};
 var lastKeyword = '';
 
-var booksTemplate = "<div class='book'>" +
-    "<span>${title}</span>" +
-    "<span>${authors}</span>" +
-    "</div>";
 
-
-function showBookList(keyword, bookList) {
+function showBookList(bookList, type, keyword, page) {
     $("#bookList").html("");
-    $.tmpl(booksTemplate, bookList).appendTo("#bookList");
+    $.tmpl(booksTemplate, {list: bookList, type: type, keyword: keyword, page: page}).appendTo("#bookList");
 }
 
-var pageTemplate = "<span>" +
-    "{{if pageNum == currentPage}}" +
-    "<b>${pageText}</b>" +
-    "{{else}}" +
-    "<a onclick=\"searchBooks('${type}', '${keyword}', ${pageNum})\">${pageText}</a>" +
-    "{{/if}}" +
-    "</span>";
+function showBookDetail(index, type, keyword, page) {
+    $('#divContents').html('');
+    console.log({book: books[page][index]});
+    $.tmpl(bookDetailTemplate, {
+        book: books[page][index],
+        type: type,
+        keyword: keyword,
+        page: page
+    }).appendTo('#divContents');
+}
 
 function showPageList(type, keyword, totalCount, currentPage) {
     var displayItemCount = 10;
@@ -67,3 +65,66 @@ function showPageList(type, keyword, totalCount, currentPage) {
     $("#pageList").html("");
     $.tmpl(pageTemplate, pages).appendTo("#pageList");
 }
+
+var booksTemplate = "{{each list}}" +
+    "<div><a class='book' onclick=\"showBookDetail(${$index}, '${type}', '${keyword}', ${page})\">" +
+    "   <span>${(page - 1) * 10 + $index + 1}</span> /" +
+    "   <span>${title}</span> /" +
+    "   <span>${authors}</span>" +
+    "</a></div>" +
+    "{{/each}}";
+
+var bookDetailTemplate = "<div>" +
+    "<table>" +
+    "   <tr>" +
+    "       <td>제목</td>" +
+    "       <td>${book.title}</td>" +
+    "   </tr>" +
+    "   {{if book.thumbUrl != null}}" +
+    "   <tr>" +
+    "       <td></td>" +
+    "       <td><img src='${book.thumbUrl}'/></td>" +
+    "   </tr>" +
+    "   {{/if}}" +
+    "   <tr>" +
+    "       <td>소개</td>" +
+    "       <td>${book.description}</td>" +
+    "   </tr>" +
+    "   <tr>" +
+    "       <td>ISBN</td>" +
+    "       <td>${book.isbn}</td>" +
+    "   </tr>" +
+    "   <tr>" +
+    "       <td>저자</td>" +
+    "       <td>${book.authors}</td>" +
+    "   </tr>" +
+    "   <tr>" +
+    "       <td>출판사</td>" +
+    "       <td>${book.publisher}</td>" +
+    "   </tr>" +
+    "   <tr>" +
+    "       <td>출판일</td>" +
+    "       <td>${book.publishDate}</td>" +
+    "   </tr>" +
+    "   <tr>" +
+    "       <td>정가</td>" +
+    "       <td>${book.price}</td>" +
+    "   </tr>" +
+    "   <tr>" +
+    "       <td>판매가</td>" +
+    "       <td>${book.salesPrice}</td>" +
+    "   </tr>" +
+    "</table>" +
+    "</div>" +
+    "<div>" +
+    "   <br/>" +
+    "   <a onclick=\"searchBooks('${type}', '${keyword}', ${page})\">목록으로</a>" +
+    "</div>";
+
+var pageTemplate = "<span>" +
+    "{{if pageNum == currentPage}}" +
+    "<b>${pageText}</b>" +
+    "{{else}}" +
+    "<a onclick=\"searchBooks('${type}', '${keyword}', ${pageNum})\">${pageText}</a>" +
+    "{{/if}}" +
+    "</span>";

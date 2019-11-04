@@ -34,7 +34,7 @@
             }
 
             if (books[page]) {
-                showSearchResult(type, keyword, {books: books[page], totalCnt: books['totalCnt']}, page);
+                showSearchResult({books: books[page], totalCnt: books['totalCnt']}, type, keyword, page);
                 console.log(books);
             } else {
                 $.ajax({
@@ -50,7 +50,7 @@
                         books[page] = data.books;
                         books['totalCnt'] = data.totalCnt;
                         console.log(books);
-                        showSearchResult(type, keyword, data, page);
+                        showSearchResult(data, type, keyword, page);
                     },
                     error: function (jqXhr, textStatus, errorMessage) { // error callback
                         alert(errorMessage);
@@ -84,6 +84,9 @@
         <p>${keyword}</p>
         <p>${searchTime}</p>
     </div>
+
+
+
 
 
 
