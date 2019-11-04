@@ -12,6 +12,7 @@
     <script type="text/javascript" th:inline="javascript" th:src="@{js/history.js}"></script>
     <script type="text/javascript" th:inline="javascript" th:src="@{js/keywordsRanking.js}"></script>
     <script type="text/javascript" th:inline="javascript">
+
         $().ready(function () {
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
@@ -23,7 +24,14 @@
             showKeywordsRank();
 
             $("#searchProc").click(function () {
-                searchBooks($('input:radio[name=rdKeywordType]:checked').val(), $("#txtKeyword").val(), 1, showKeywordsRank);
+                var keyword = $("#txtKeyword").val();
+
+                if (!$.trim(keyword)) {
+                    alert("검색 키워드를 입력해주세요");
+                    return false;
+                }
+
+                searchBooks($('input:radio[name=rdKeywordType]:checked').val(), keyword, 1, showKeywordsRank);
             });
         });
     </script>
