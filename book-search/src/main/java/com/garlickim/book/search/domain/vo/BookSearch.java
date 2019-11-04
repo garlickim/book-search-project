@@ -1,5 +1,7 @@
 package com.garlickim.book.search.domain.vo;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,11 +11,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookSearch
+public class BookSearch implements Serializable
 {
-    private String  type;
+    private static final long serialVersionUID = -4165458886390333095L;
 
-    private String  keyword;
+    private String            type;
 
-    private Integer page;
+    private String            keyword;
+
+    private Integer           page;
 }

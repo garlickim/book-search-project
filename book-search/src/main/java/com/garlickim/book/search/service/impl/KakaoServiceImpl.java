@@ -44,6 +44,7 @@ public class KakaoServiceImpl extends ApiService
 
 
 
+    // api 호출 쿼리 파라미터 생성
     @Override
     protected String getQueryParameter(BookSearch bookSearch)
     {
@@ -78,6 +79,7 @@ public class KakaoServiceImpl extends ApiService
 
 
 
+    // header property 세팅
     @Override
     protected void setProperty(HttpURLConnection connection)
     {
@@ -96,6 +98,7 @@ public class KakaoServiceImpl extends ApiService
 
 
 
+    // 화면 VO 객체로 데이터 변환
     @Override
     public Document convertBook(String str)
     {

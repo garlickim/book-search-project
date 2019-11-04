@@ -28,6 +28,7 @@ public class ViewController
 
 
 
+    // 로그인 페이지
     @GetMapping("/user/login")
     public String loginView()
     {
@@ -40,7 +41,7 @@ public class ViewController
 
     // 회원가입 페이지
     @GetMapping("/user/signup")
-    public String viewSignUp(Model model, Principal principal)
+    public String viewSignUp()
     {
         return "signup";
     }

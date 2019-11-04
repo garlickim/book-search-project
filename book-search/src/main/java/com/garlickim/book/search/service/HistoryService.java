@@ -8,7 +8,7 @@ import com.garlickim.book.search.repository.HistoryStatistics;
 public interface HistoryService
 {
 
-    void saveHistroy(History history);
+    void saveHistory(History history);
 
 
 

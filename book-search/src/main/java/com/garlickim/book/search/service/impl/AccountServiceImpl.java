@@ -43,6 +43,7 @@ public class AccountServiceImpl implements UserDetailsService
 
 
 
+    // 사용자 생성
     public Account createNew(Account account)
     {
         account.encodePassword(this.passwordEncoder);

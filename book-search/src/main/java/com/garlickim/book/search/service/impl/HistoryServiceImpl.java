@@ -18,18 +18,22 @@ public class HistoryServiceImpl implements HistoryService
     @Autowired
     HistoryRepository historyRepository;
 
-    public void saveHistroy(History history)
+    // 키워드 검색 이력 저장
+    @Override
+    public void saveHistory(History history)
     {
-        historyRepository.save(history);
+        this.historyRepository.save(history);
     }
 
 
 
 
 
+    // 키워드 검색 이력 조회
+    @Override
     public List<History> findKeywordHistory(String username)
     {
-        ArrayList<History> histories = historyRepository.findByUsernameOrderBySearchTimeDesc(username);
+        ArrayList<History> histories = this.historyRepository.findByUsernameOrderBySearchTimeDesc(username);
 
         return histories;
     }
@@ -38,8 +42,10 @@ public class HistoryServiceImpl implements HistoryService
 
 
 
+    // 인기 검색어 조회
+    @Override
     public List<HistoryStatistics> findByKeywordAndCount()
     {
-        return historyRepository.findByKeywordAndCount();
+        return this.historyRepository.findByKeywordAndCount();
     }
 }

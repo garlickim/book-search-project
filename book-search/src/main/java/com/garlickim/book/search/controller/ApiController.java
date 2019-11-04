@@ -48,7 +48,7 @@ public class ApiController
                                    .username(principal.getName())
                                    .keyword(req.getKeyword())
                                    .build())
-                .ifPresent(this.historyService::saveHistroy);
+                .ifPresent(this.historyService::saveHistory);
 
         return books;
     }
@@ -57,6 +57,7 @@ public class ApiController
 
 
 
+    // 인기검색어 조회
     @GetMapping("/users/{username}/keywords")
     public List<History> procKeywordHistory(@PathVariable String username)
     {

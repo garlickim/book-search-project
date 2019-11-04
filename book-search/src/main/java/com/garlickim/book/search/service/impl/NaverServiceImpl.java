@@ -41,6 +41,7 @@ public class NaverServiceImpl extends ApiService
 
 
 
+    // api 호출 쿼리 파라미터 생성
     @Override
     public String getQueryParameter(BookSearch bookSearch)
     {
@@ -60,19 +61,24 @@ public class NaverServiceImpl extends ApiService
             case "4":
                 queryParameter = "d_auth=";
                 break;
+            default:
+                throw new BookSearchException("BOOK SEARCH TYPE ERROR : " + bookSearch.getType());
         }
+
+        queryParameter += URLEncoder.encode(bookSearch.getKeyword(), StandardCharsets.UTF_8);
 
         queryParameter += Optional.ofNullable(bookSearch.getPage())
                                   .map(page -> "&start=" + page)
                                   .orElse("");
 
-        return queryParameter + URLEncoder.encode(bookSearch.getKeyword(), StandardCharsets.UTF_8);
+        return queryParameter;
     }
 
 
 
 
 
+    // header property 세팅
     @Override
     public void setProperty(HttpURLConnection connection)
     {
@@ -92,6 +98,7 @@ public class NaverServiceImpl extends ApiService
 
 
 
+    // 화면 VO 객체로 데이터 변환
     @Override
     public Document convertBook(String str)
     {

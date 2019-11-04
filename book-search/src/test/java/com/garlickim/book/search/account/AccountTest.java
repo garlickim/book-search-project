@@ -37,7 +37,7 @@ public class AccountTest
     @WithAnonymousUser // anotation 방식으로 user 정보 set 하는 방법
     public void index_anonymous() throws Exception
     {
-        this.mockMvc.perform(get("/"))
+        this.mockMvc.perform(get("/user/login"))
                     .andDo(print())
                     .andExpect(status().isOk());
     }
