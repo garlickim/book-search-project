@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         http.authorizeRequests()
-            .antMatchers("/users", "/user/**", "/h2console/**")
+            .antMatchers("/users", "/user/**", "/h2console/**", "/js/**", "/users/duplicate/**")
             .permitAll() // 해당 URL에 대하여 로그인없이 접근할 수 있도록 인가
             .anyRequest()
             .authenticated(); // 나머지 URL에 대하여 로그인이 필요

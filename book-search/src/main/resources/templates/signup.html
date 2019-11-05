@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>signup</title>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/jquery-3.4.1.js}"></script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/signup.js}"></script>
 </head>
 <body>
 <h1>회원가입</h1>
 
-<form th:action="@{/users}" method="post">
+<form th:action="@{/users}" method="post" onsubmit="return validateSignup()">
     <input type="text" id="username" name="username" placeholder="아이디를 입력해주세요">
     <input type="password" id="password" name="password" placeholder="비밀번호">
     <button type="submit">가입하기</button>

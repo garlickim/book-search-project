@@ -11,6 +11,7 @@ import com.garlickim.book.search.domain.entity.History;
 import com.garlickim.book.search.domain.vo.BookSearch;
 import com.garlickim.book.search.domain.vo.Document;
 import com.garlickim.book.search.repository.HistoryStatistics;
+import com.garlickim.book.search.service.impl.AccountServiceImpl;
 import com.garlickim.book.search.service.impl.HistoryServiceImpl;
 import com.garlickim.book.search.service.impl.KakaoServiceImpl;
 import com.garlickim.book.search.service.impl.NaverServiceImpl;
@@ -18,6 +19,9 @@ import com.garlickim.book.search.service.impl.NaverServiceImpl;
 @RestController
 public class ApiController
 {
+    @Autowired
+    AccountServiceImpl accountService;
+
     @Autowired
     HistoryServiceImpl historyService;
 
@@ -72,6 +76,17 @@ public class ApiController
     public List<HistoryStatistics> procKeywords()
     {
         return this.historyService.findByKeywordAndCount();
+    }
+
+
+
+
+
+    // ID 중복 검사
+    @GetMapping("/users/duplicate/{username}")
+    public Boolean procDuplicateUser(@PathVariable String username)
+    {
+        return this.accountService.isExistUsername(username);
     }
 
 }

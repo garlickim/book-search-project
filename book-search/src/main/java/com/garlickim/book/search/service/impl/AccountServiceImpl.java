@@ -50,4 +50,15 @@ public class AccountServiceImpl implements UserDetailsService
         account.setRole("USER");
         return this.accountRepository.save(account);
     }
+
+
+
+
+
+    // ID 중복 검사
+    public Boolean isExistUsername(String username)
+    {
+        Account account = this.accountRepository.findByUsername(username);
+        return account == null ? false : true;
+    }
 }
