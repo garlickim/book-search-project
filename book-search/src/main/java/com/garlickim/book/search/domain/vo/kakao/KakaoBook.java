@@ -3,6 +3,7 @@ package com.garlickim.book.search.domain.vo.kakao;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -33,7 +34,7 @@ public class KakaoBook implements Serializable
     private Instant           datetime;
 
     // 도서 저자 리스트
-    private String[]          authors;
+    private List<String>      authors;
 
     // 도서 출판사
     private String            publisher;
@@ -52,6 +53,10 @@ public class KakaoBook implements Serializable
 
     // 도서 판매 상태 정보
     private String            status;
+
+
+
+
 
     // Instant type의 datetime을 yyyy-MM-dd 포멧의 String으로 변경
     public String getDatetime()

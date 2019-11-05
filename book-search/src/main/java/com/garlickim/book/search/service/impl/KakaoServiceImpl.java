@@ -35,6 +35,10 @@ public class KakaoServiceImpl extends ApiService
     @Value("${kakao.api.key}")
     String       kakaoApiKey;
 
+
+
+
+
     @Override
     protected String getUrl()
     {
@@ -133,6 +137,7 @@ public class KakaoServiceImpl extends ApiService
                                                               .publisher(kakaoBook.getPublisher())
                                                               .price(kakaoBook.getPrice())
                                                               .salesPrice(kakaoBook.getSale_price())
+                                                              .thumbUrl(kakaoBook.getThumbnail())
                                                               .build())
                                         .collect(Collectors.toList());
 

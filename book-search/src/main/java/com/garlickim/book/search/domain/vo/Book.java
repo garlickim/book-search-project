@@ -1,6 +1,7 @@
 package com.garlickim.book.search.domain.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +29,7 @@ public class Book implements Serializable
     private String            publishDate;
 
     // 도서 저자 리스트
-    private String[]          authors;
+    private List<String>      authors;
 
     // 도서 출판사
     private String            publisher;

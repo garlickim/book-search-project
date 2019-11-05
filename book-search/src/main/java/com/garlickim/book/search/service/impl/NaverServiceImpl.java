@@ -127,11 +127,11 @@ public class NaverServiceImpl extends ApiService
                                                               .description(naverBook.getDescription())
                                                               .isbn(naverBook.getIsbn())
                                                               .publishDate(naverBook.getPubdate())
-                                                              .authors(naverBook.getAuthor()
-                                                                                .split(""))
+                                                              .authors(List.of(naverBook.getAuthor()))
                                                               .publisher(naverBook.getPublisher())
                                                               .price(naverBook.getPrice())
                                                               .salesPrice(naverBook.getDiscount())
+                                                              .thumbUrl(naverBook.getImage())
                                                               .build())
                                         .collect(Collectors.toList());
 
