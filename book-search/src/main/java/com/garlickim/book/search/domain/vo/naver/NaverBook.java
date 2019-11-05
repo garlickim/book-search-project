@@ -46,6 +46,10 @@ public class NaverBook implements Serializable
     // 도서 소개
     private String            description;
 
+
+
+
+
     // Date type의 pubdate을 yyyy-MM-dd 포멧의 String으로 변경
     public String getPubdate()
     {
@@ -53,4 +57,25 @@ public class NaverBook implements Serializable
         return dateFormat.format(this.pubdate);
     }
 
+
+
+
+
+    // naver api 호출시, title에 <br>, </br> 태그 존재하여 삭제 후 get
+    public String getTitle()
+    {
+        return this.title.replaceAll("<b>", "")
+                         .replaceAll("</b>", "");
+    }
+
+
+
+
+
+    // naver api 호출시, description에 <br>, </br> 태그 존재하여 삭제 후 get
+    public String getDescription()
+    {
+        return this.description.replaceAll("<b>", "")
+                               .replaceAll("</b>", "");
+    }
 }
