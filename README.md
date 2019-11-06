@@ -1,9 +1,15 @@
 # book-search-project
 ### 카카오/네이버 오픈 API를 이용한 도서 검색 프로젝트  <br>
-해당 프로젝트를 구성하기 위해 사용한 오픈소스와 목적을 하기와 같이 명시합니다.
+
+
+- 프로젝트 빌드 결과물(book-search-1.0.jar) 다운로드 URL <br>
+<https://github.com/garlickim/book-search-project/raw/develop/file/book-search-1.0.jar>
+
+*****
+
+- 해당 프로젝트를 구성하기 위해 사용한 오픈소스와 목적을 하기와 같이 명시합니다.
  <br>
- <br>
- 
+
 **Spring Boot**  <br>
 Spring Framework 기반의 프로젝트를 구성하기 위해 사용  <br>
 http://github.com/spring-projects/spring-boot  <br>
