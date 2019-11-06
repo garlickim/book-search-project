@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,13 @@ public class AccountTest
 
     @Autowired
     AccountServiceImpl accountService;
+
+    String             username = "garlic";
+    String             password = "1234";
+
+
+
+
 
     @Test
     @WithAnonymousUser // anotation 방식으로 user 정보 set 하는 방법
@@ -59,15 +67,13 @@ public class AccountTest
 
 
     @Test
-    @Transactional // DB 테스트 시, 데이터가 dependancy 하지 않도록 @Transaction을 붙여주는 것이 좋다.
+    @Transactional
     public void login_success() throws Exception
     {
-        String username = "garlic";
-        String password = "1234";
-        Account user = this.createUser(username, password);
+        Account user = this.createUser(this.username, this.password);
         this.mockMvc.perform(formLogin().loginProcessingUrl("/user/login")
                                         .user(user.getUsername())
-                                        .password(password))
+                                        .password(this.password))
                     .andExpect(authenticated());
     }
 
@@ -79,12 +85,35 @@ public class AccountTest
     @Transactional()
     public void login_fail() throws Exception
     {
-        String username = "garlic";
-        String password = "1234";
-        Account user = this.createUser(username, password);
+        Account user = this.createUser(this.username, this.password);
         this.mockMvc.perform(formLogin().user(user.getUsername())
                                         .password("12345"))
                     .andExpect(unauthenticated());
+    }
+
+
+
+
+
+    // ID 중복 체크 TRUE
+    @Test
+    @Transactional()
+    public void isExistUsernameTest1()
+    {
+        Account user = this.createUser(this.username, this.password);
+        Assert.assertTrue(this.accountService.isExistUsername(user.getUsername()));
+    }
+
+
+
+
+
+    // ID 중복 체크 FALSE
+    @Test
+    @Transactional()
+    public void isExistUsernameTest2()
+    {
+        Assert.assertFalse(this.accountService.isExistUsername(this.username));
     }
 
 

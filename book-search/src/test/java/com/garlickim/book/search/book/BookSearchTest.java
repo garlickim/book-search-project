@@ -1,4 +1,4 @@
-package com.garlickim.book.search.account;
+package com.garlickim.book.search.book;
 
 import org.junit.Assert;
 import org.junit.Rule;
@@ -29,6 +29,11 @@ public class BookSearchTest
     @Rule
     public ExpectedException expectedExcetption = ExpectedException.none();
 
+
+
+
+
+    // kakao api 호출시, 정상 작동 확인
     @Test
     public void searchKakaoTest1()
     {
@@ -45,6 +50,7 @@ public class BookSearchTest
 
 
 
+    // naver api 호출시, 정상 작동 확인
     @Test
     public void searchNaverTest1()
     {
@@ -61,6 +67,7 @@ public class BookSearchTest
 
 
 
+    // 잘못된 BookSearch Type 전송시 에러 발생
     @Test
     public void searchNaverTest2()
     {

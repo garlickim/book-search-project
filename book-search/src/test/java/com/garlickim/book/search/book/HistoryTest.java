@@ -1,4 +1,4 @@
-package com.garlickim.book.search.account;
+package com.garlickim.book.search.book;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -31,6 +31,10 @@ public class HistoryTest
     @Autowired
     HistoryRepository  historyRepository;
 
+
+
+
+
     @Before
     public void before()
     {
@@ -62,6 +66,7 @@ public class HistoryTest
 
 
 
+    // 검색 키워드 히스토리
     @Test
     public void keywordHistoryTest1()
     {
@@ -82,6 +87,7 @@ public class HistoryTest
 
 
 
+    // 인기 검색어
     @Test
     public void rankKeywordsTest1()
     {
@@ -99,6 +105,7 @@ public class HistoryTest
 
 
 
+    // 인기 검색어
     @Test
     public void rankKeywordsTest2()
     {
