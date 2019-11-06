@@ -24,3 +24,5 @@ kakao:
 naver:
   api:
     url: https://openapi.naver.com/v1/search/book_adv.json?
+    id: 2GNd6CCIbCzgAJt7MGWF
+    secret: hOqmSBFivh

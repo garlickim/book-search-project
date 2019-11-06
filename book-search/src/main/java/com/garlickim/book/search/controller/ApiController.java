@@ -61,7 +61,7 @@ public class ApiController
 
 
 
-    // 인기검색어 조회
+    // 키워드 검색 이력 조회
     @GetMapping("/users/{username}/keywords")
     public List<History> procKeywordHistory(@PathVariable String username)
     {
@@ -72,6 +72,7 @@ public class ApiController
 
 
 
+    // 인기검색어 조회
     @GetMapping("/keywords")
     public List<HistoryStatistics> procKeywords()
     {

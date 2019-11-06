@@ -32,6 +32,16 @@ public class NaverServiceImpl extends ApiService
     @Value("${naver.api.url}")
     String       apiUrl;
 
+    @Value("${naver.api.id}")
+    String       id;
+
+    @Value("${naver.api.secret}")
+    String       secret;
+
+
+
+
+
     @Override
     protected String getUrl()
     {
@@ -92,8 +102,8 @@ public class NaverServiceImpl extends ApiService
     {
         try
         {
-            connection.setRequestProperty("X-Naver-Client-Id", "2GNd6CCIbCzgAJt7MGWF");
-            connection.setRequestProperty("X-Naver-Client-Secret", "hOqmSBFivh");
+            connection.setRequestProperty("X-Naver-Client-Id", this.id);
+            connection.setRequestProperty("X-Naver-Client-Secret", this.secret);
             connection.setRequestMethod("GET");
         }
         catch ( ProtocolException e )
