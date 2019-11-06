@@ -53,7 +53,7 @@ public class KakaoServiceImpl extends ApiService
     @Override
     protected String getQueryParameter(BookSearch bookSearch)
     {
-        String queryParameter = "&target=";
+        String queryParameter = "target=";
 
         switch ( bookSearch.getType() )
         {
@@ -70,7 +70,7 @@ public class KakaoServiceImpl extends ApiService
                 queryParameter += "person";
                 break;
             default:
-                queryParameter = "";
+                throw new BookSearchException("BOOK SEARCH TYPE ERROR : " + bookSearch.getType());
         }
 
         try

@@ -1,6 +1,7 @@
-package com.garlickim.book.search.book;
+package com.garlickim.book.search.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.junit.Assert;
@@ -14,17 +15,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.garlickim.book.search.domain.entity.History;
 import com.garlickim.book.search.repository.HistoryRepository;
 import com.garlickim.book.search.repository.HistoryStatistics;
-import com.garlickim.book.search.service.impl.AccountServiceImpl;
-import com.garlickim.book.search.service.impl.HistoryServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class HistoryTest
+public class HistoryServiceImplTest
 {
-
-    @Autowired
-    AccountServiceImpl accountService;
-
     @Autowired
     HistoryServiceImpl historyService;
 
@@ -66,9 +61,28 @@ public class HistoryTest
 
 
 
-    // 검색 키워드 히스토리
     @Test
-    public void keywordHistoryTest1()
+    public void saveHistory()
+    {
+        this.historyService.saveHistory(History.builder()
+                                               .username("garlic00")
+                                               .keyword("UUID")
+                                               .build());
+
+        List<History> historyList = this.historyRepository.findAll();
+        List<String> keywords = historyList.stream()
+                                           .map(history -> history.getKeyword())
+                                           .collect(Collectors.toList());
+
+        Assert.assertTrue(keywords.contains("UUID"));
+    }
+
+
+
+
+
+    @Test
+    public void findKeywordHistory()
     {
         List<History> list = this.historyService.findKeywordHistory("garlic");
 
@@ -87,9 +101,8 @@ public class HistoryTest
 
 
 
-    // 인기 검색어
     @Test
-    public void rankKeywordsTest1()
+    public void findByKeywordAndCount()
     {
         List<HistoryStatistics> byKeywordAndCount = this.historyService.findByKeywordAndCount();
 
@@ -105,11 +118,9 @@ public class HistoryTest
 
 
 
-    // 인기 검색어
     @Test
-    public void rankKeywordsTest2()
+    public void findByKeywordAndCount2()
     {
-
         IntStream.range(0, 4)
                  .forEach(i -> this.historyRepository.save(History.builder()
                                                                   .username("garlic")
@@ -195,7 +206,5 @@ public class HistoryTest
         Assert.assertEquals(Integer.valueOf(3),
                             byKeywordAndCount.get(4)
                                              .getCnt());
-
     }
-
 }
